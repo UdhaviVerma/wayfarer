@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: wayfarer-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: POSTGRES_SERVER
+        value: wayfarer-db
+      - key: POSTGRES_PORT
+        value: 5432
+      - key: POSTGRES_USER
+        value: postgres
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: POSTGRES_DB
+        value: relocation
+      - key: SECRET_KEY
+        sync: false
+  - type: web
+    name: wayfarer-frontend
+    runtime: docker
+    rootDir: frontend
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://wayfarer-backend.onrender.com/api/v1
+
+databases:
+  - name: wayfarer-db
+    plan: free

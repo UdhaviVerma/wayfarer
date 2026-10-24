@@ -86,7 +86,11 @@ export default function DashboardPage() {
 
   async function downloadReport() {
     if (!advisorPayload) return;
-    const base = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+    const base =
+      process.env.NEXT_PUBLIC_API_URL ||
+      (process.env.NODE_ENV === 'production'
+        ? 'https://wayfarer-backend-ai.onrender.com/api/v1'
+        : 'http://localhost:8000/api/v1');
     const response = await fetch(`${base}/recommendations/report`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
